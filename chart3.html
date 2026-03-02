@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Var YoY % Anual por Estado</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 30px 20px; }
+  .card { background: #fff; border-radius: 14px; padding: 28px 28px 20px; box-shadow: 0 4px 20px rgba(0,0,0,.1); width: 100%; max-width: 1100px; }
+  h1 { color: #1a3a5c; font-size: 18px; margin-bottom: 4px; }
+  p { color: #888; font-size: 12px; margin-bottom: 24px; }
+  .chart-wrap { position: relative; height: 620px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>📊 Venta Total de Unidades por Estado — CRECELAC</h1>
+  <p>Total anual absoluto · Ordenado alfabéticamente</p>
+  <div class="chart-wrap">
+    <canvas id="myChart"></canvas>
+  </div>
+</div>
+
+<script>
+const labels = ["AGUASCALIENTES","BAJA CALIFORNIA","BAJA CALIFORNIA SUR","CAMPECHE","CHIAPAS","CHIHUAHUA","CIUDAD DE MEXICO","COAHUILA","COLIMA","DURANGO","GUANAJUATO","GUERRERO","HIDALGO","JALISCO","MEXICO STATE","MICHOACAN","MORELOS","NAYARIT","NUEVO LEON","OAXACA","PUEBLA","QUERETARO","QUINTANA ROO","SAN LUIS POTOSI","SINALOA","SONORA","TABASCO","TAMAULIPAS","TLAXCALA","VERACRUZ","YUCATAN","ZACATECAS"];
+const values = [6150,7022,285,449,93,6495,1814,6122,232,777,4383,378,244,5895,2029,2042,245,539,28120,30,504,608,1925,519,2747,9391,150,8483,50,1554,3511,798];
+
+const colors = values.map(v => v < 0 ? 'rgba(192,57,43,0.85)' : 'rgba(39,174,96,0.85)');
+const borderColors = values.map(v => v < 0 ? '#922b21' : '#1a7a3c');
+
+const ctx = document.getElementById('myChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      label: 'Var YoY % Anual',
+      data: values,
+      backgroundColor: values.map(v => v >= 0 ? 'rgba(39,174,96,0.85)' : 'rgba(192,57,43,0.85)'),
+      borderColor: values.map(v => v >= 0 ? '#1a7a3c' : '#922b21'),
+      borderWidth: 1.5,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.parsed.y > 0 ? '+' : ''}${ctx.parsed.y.toLocaleString()} uds`
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { font: { size: 10 }, maxRotation: 90, minRotation: 90 },
+        grid: { display: false }
+      },
+      y: {
+        grid: { color: '#eee' },
+        ticks: { callback: v => (v > 0 ? '+' : '') + v.toLocaleString(), font: { size: 11 } },
+        title: { display: true, text: 'Unidades Vendidas (Total Anual)', font: { size: 13 }, color: '#1a3a5c' }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
