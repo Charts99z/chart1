@@ -21,14 +21,11 @@
     <canvas id="myChart"></canvas>
   </div>
 </div>
-
 <script>
 const labels = ["AGUASCALIENTES","BAJA CALIFORNIA","BAJA CALIFORNIA SUR","CAMPECHE","CHIAPAS","CHIHUAHUA","CIUDAD DE MEXICO","COAHUILA","COLIMA","DURANGO","GUANAJUATO","GUERRERO","HIDALGO","JALISCO","MEXICO STATE","MICHOACAN","MORELOS","NAYARIT","NUEVO LEON","OAXACA","PUEBLA","QUERETARO","QUINTANA ROO","SAN LUIS POTOSI","SINALOA","SONORA","TABASCO","TAMAULIPAS","TLAXCALA","VERACRUZ","YUCATAN","ZACATECAS"];
 const values = [6150,7022,285,449,93,6495,1814,6122,232,777,4383,378,244,5895,2029,2042,245,539,28120,30,504,608,1925,519,2747,9391,150,8483,50,1554,3511,798];
-
 const colors = values.map(v => v < 0 ? 'rgba(192,57,43,0.85)' : 'rgba(39,174,96,0.85)');
 const borderColors = values.map(v => v < 0 ? '#922b21' : '#1a7a3c');
-
 const ctx = document.getElementById('myChart').getContext('2d');
 new Chart(ctx, {
   type: 'bar',
@@ -50,7 +47,7 @@ new Chart(ctx, {
       legend: { display: false },
       tooltip: {
         callbacks: {
-          label: ctx => `${ctx.parsed.y > 0 ? '+' : ''}${ctx.parsed.y.toLocaleString()} uds`
+          label: ctx => `${ctx.parsed.y.toLocaleString()} uds`
         }
       }
     },
@@ -61,7 +58,7 @@ new Chart(ctx, {
       },
       y: {
         grid: { color: '#eee' },
-        ticks: { callback: v => (v > 0 ? '+' : '') + v.toLocaleString(), font: { size: 11 } },
+        ticks: { callback: v => v.toLocaleString(), font: { size: 11 } },
         title: { display: true, text: 'Unidades Vendidas (Total Anual)', font: { size: 13 }, color: '#1a3a5c' }
       }
     }
